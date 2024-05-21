@@ -1,0 +1,11 @@
+{
+    "name": "interfaz",
+    "version": "1.0.0",
+    "description": "la interfaz del tp 2",
+    "main": "app.js",
+    "author": "yo",
+    "license": "si",
+    "dependencies": {
+        "express": "^4.19.2"
+    }
+}
