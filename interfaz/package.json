@@ -6,6 +6,7 @@
     "author": "yo",
     "license": "si",
     "dependencies": {
-        "express": "^4.19.2"
+        "express": "^4.19.2",
+        "nano": "^10.1.3"
     }
 }
