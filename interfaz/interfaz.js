@@ -1,16 +1,14 @@
 const express = require("express");
-
-//const db = nano.db.use("datos_aleatorios"); //usa la base de datos llamada datos_aleatorios, para probar aunque lo prolijo seria create
-
-const nano = require('nano')('http://localhost:5984'); //en internet figura que hay que poner http://admin:admin@localhost:5984
+const nano = require('nano')('http://admin:admin@172.17.0.2:5984'); 
 const app = express()
 const port = 8080;
 
-nano.db.list((err, body) => { //no iria pero es para ver si se realizo la conexion y arroja error
+// Crear la base de datos "datos_aleatorios"
+nano.db.create('datos_aleatorios', function(err, body) {
   if (err) {
-    console.error("Error al listar las bases de datos:", err);
+    console.error("Error al crear la base de datos 'datos_aleatorios':", err);
   } else {
-    console.log("Bases de datos disponibles:", body);
+    console.log("Base de datos 'datos_aleatorios' creada correctamente");
   }
 });
 
@@ -21,16 +19,30 @@ function generarDatosAleatorios(){
   };
 }
 
-app.get("/datos",async (req,res)=>
-{
-  const datos = generarDatosAleatorios();
-  try{
-    const result = await db.insert(datos);
-    res.status(200).json(result);
-  } catch (error){
-    res.status(500).json({ error: "Error al insertar datos en la base de datos"});
+
+
+app.get("/datos", (req, res) => {
+  // Crear la instancia de la base de datos 'db' utilizando nano.db.use
+  const db = nano.db.use('datos_aleatorios');
+
+  // Función para insertar datos en la base de datos
+  async function insertarDatos() {
+    try {
+      const datos = generarDatosAleatorios();
+      const result = await db.insert(datos);
+      console.log("Datos insertados correctamente:", result);
+    } catch (error) {
+      console.error("Error al insertar datos en la base de datos:", error);
+    }
   }
+
+  // Insertar datos inicialmente y luego cada segundo
+  insertarDatos(); // Insertar datos inicialmente
+  setInterval(insertarDatos, 1000); // Insertar datos cada segundo
+
+  res.status(200).json({ message: "Generando datos constantemente" });
 });
+
 
 
 app.get("/", async (req, res) => {
