@@ -3,5 +3,6 @@ WORKDIR /app
 COPY . /app
 RUN npm install
 RUN npm install express
-EXPOSE 8080
+RUN npm install nano
+EXPOSE 8081
 CMD [ "node", "servidor.js" ]
