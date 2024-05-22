@@ -1,0 +1,23 @@
+# docker-compose.yml
+services:
+  basededatos:
+    build: ./basededatos
+    ports:
+      - "5984:5984"
+    environment:
+      COUCHDB_USER: admin
+      COUCHDB_PASSWORD: admin
+
+  servidor:
+    build: ./servidor
+    ports:
+      - "8081:8081"
+    depends_on:
+      - basededatos
+
+  interfaz:
+    build: ./interfaz
+    ports:
+      - "8080:8080"
+    depends_on:
+      - servidor

@@ -1,18 +1,24 @@
 const express = require("express");
 const nano = require('nano')('http://admin:admin@172.17.0.2:5984'); 
-const db = nano.db.use('datos_aleatorios');
 const app = express()
+const cors = require('cors')
 const port = 8081;
+let db;
 
+app.use(express.json())
+app.use(cors()) //Habilitar CORS
 
-// Crear la base de datos "datos_aleatorios"
-nano.db.create('datos_aleatorios', function(err, body) {
-  if (err) {
-    console.error("Error al crear la base de datos 'datos_aleatorios':", err);
-  } else {
-    console.log("Base de datos 'datos_aleatorios' creada correctamente");
+async function createDatabase() {
+      try {
+          await nano.db.create('datos_aleatorios');
+          db = nano.use('datos_aleatorios');
+          console.log("Base de datos 'datos_aleatorios' creada correctamente");
+          return;
+      } catch (error) {
+        console.error("Error al crear la base de datos 'datos_aleatorios':", error);
+      }
   }
-});
+
 
 function generarDatoAleatorios(){
   return {
@@ -24,6 +30,7 @@ function generarDatoAleatorios(){
 app.get("/datos", async (req, res) => {
   try
   {
+    console.log("Recibio pedido datos")
     const datos = await db.list({include_docs:true});
     res.json(datos);
   }
@@ -39,10 +46,18 @@ async function insertarDatos() {
   try {
     const datos = generarDatoAleatorios();
     const result = await db.insert(datos);
-    console.log("Datos insertados correctamente:", result);
+    console.log("Datos insertados correctamente:");
   } catch (error) {
     console.error("Error al insertar datos en la base de datos:", error);
   }
 }
 
-setInterval(insertarDatos, 1000); // Insertar datos cada segundo
+app.listen(port, async () => {
+  try {
+      await createDatabase();
+      insertarDatos();
+      console.log(`Server is running on port ${port}`);
+  } catch (error) {
+      console.error('Failed to initialize server:', error.message);
+  }
+});
