@@ -1,8 +1,8 @@
-const express = require("express");
+const express = require("express")
 //const axios = require("axios")
 
 const app = express()
-const port = 8080;
+const port = 8083;
 
 //app.get("/datos",async (req,res)=>
 //{
@@ -11,11 +11,10 @@ const port = 8080;
 
 
 app.get("/", async (req, res) => {
-    res.setHeader("Content-Type", "text/html");
-    res.status(200);
-    res.send("<h1>Hello world</h1>");
-  });
+    res.status(200)
+    res.sendFile(path.joiin(__dirname,"public","index.html"))
+  })
   
 app.listen(port, () => {
-    console.log(`Server is listening at http://localhost:${port}`);
-});
+    console.log(`Listening at http://localhost:${port}`)
+})
