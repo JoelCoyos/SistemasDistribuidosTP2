@@ -1,5 +1,6 @@
 const express = require("express");
-const nano = require('nano')('http://admin:admin@basededatos:5984'); 
+const cors = require('cors')
+const nano = require('nano')('http://admin:admin@172.17.0.2:5984'); 
 const app = express()
 const port = 8081;
 let db;
@@ -38,6 +39,8 @@ app.get("/datos", async (req, res) => {
 });
 
 
+
+
 // Función para insertar datos en la base de datos
 async function insertarDatos() {
   try {
@@ -50,6 +53,7 @@ async function insertarDatos() {
 }
 app.post("/insertar", async (req,res) => {
   try{
+    console("Tratando de insertar")
     const { nombre, edad } = req.body;
     const result = await db.insert({ nombre, edad });
     console.log("Datos insertados manualmente correctamente", { nombre, edad });

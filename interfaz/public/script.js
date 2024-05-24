@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ nombre, edad })
+                body: JSON.stringify({nombre:nombre,edad:edad })
             });
 
             if (!response.ok) {
@@ -31,7 +31,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
             nombreInput.value = '';
             edadInput.value = '';
-            fetchData();
         } catch (error) {
             console.error('Error al insertar datos:', error);
             alert('Se produjo un error al insertar datos. Por favor, inténtalo de nuevo.');
