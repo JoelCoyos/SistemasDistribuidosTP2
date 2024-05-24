@@ -1,0 +1,37 @@
+# docker-compose.yml
+version: "3.8"
+
+networks:
+  backend:
+
+services:
+  basededatos:
+    build: ./basededatos
+    ports:
+      - "5984:5984"
+    container_name: basededatos
+    environment:
+      COUCHDB_USER: admin
+      COUCHDB_PASSWORD: admin
+    networks:
+      - backend
+
+  servidor:
+    build: ./servidor
+    ports:
+      - "8081:8081"
+    container_name: servidor
+    depends_on:
+      - basededatos
+    networks:
+      - backend
+
+  interfaz:
+    build: ./interfaz
+    ports:
+      - "8080:8080"
+    container_name: interfaz
+    depends_on:
+      - servidor
+    networks:
+      - backend
