@@ -16,7 +16,7 @@ app.get("/", async (req, res) => {
 app.get('/datos', async (req, res) => {
     try {
         console.log("Pidiendo datos...")
-        const response = await axios.get('http://172.17.0.3:8081/datos');
+        const response = await axios.get('http://servidor:8081/datos');
         res.json(response.data);
     } catch (error) {
         res.status(500).json({ error: error.message });
@@ -27,7 +27,7 @@ app.post('/insertar', async (req, res) => {
     try {
         console.log("Llega aca???")
         const { nombre, edad } = req.body; // Se espera que el cuerpo de la solicitud contenga nombre y edad
-        await axios.post('http://172.17.0.3:8081/insertar',
+        await axios.post('http://servidor:8081/insertar',
         {
             nombre:nombre,
             edad:edad

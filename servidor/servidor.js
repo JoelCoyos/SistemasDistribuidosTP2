@@ -1,6 +1,6 @@
 const express = require("express");
 const cors = require('cors')
-const nano = require('nano')('http://admin:admin@172.17.0.2:5984'); 
+const nano = require('nano')('http://admin:admin@basededatos:5984'); 
 const app = express()
 const port = 8081;
 let db;
@@ -10,9 +10,12 @@ app.use(cors());
 
 async function createDatabase() {
       try {
-          await nano.db.create('datos_aleatorios');
-          db = nano.use('datos_aleatorios');
-          console.log("Base de datos 'datos_aleatorios' creada correctamente");
+        await nano.db.create('datos_aleatorios');
+        db = nano.use('datos_aleatorios');
+        console.log("Base de datos 'datos_aleatorios' creada correctamente");
+        insertarDatos();
+        console.log(`Server is running on port ${port}`);
+        setInterval(insertarDatos,1000);
           return;
       } catch (error) {
         console.error("Error al crear la base de datos 'datos_aleatorios':", error);
@@ -53,7 +56,6 @@ async function insertarDatos() {
 }
 app.post("/insertar", async (req,res) => {
   try{
-    console("Tratando de insertar")
     const { nombre, edad } = req.body;
     const result = await db.insert({ nombre, edad });
     console.log("Datos insertados manualmente correctamente", { nombre, edad });
@@ -69,9 +71,6 @@ app.post("/insertar", async (req,res) => {
 app.listen(port, async () => {
   try {
       await createDatabase();
-      insertarDatos();
-      console.log(`Server is running on port ${port}`);
-      setInterval(insertarDatos,1000);
   } catch (error) {
       console.error('Failed to initialize server:', error.message);
   }

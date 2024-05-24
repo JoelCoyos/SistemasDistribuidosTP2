@@ -31,6 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             nombreInput.value = '';
             edadInput.value = '';
+            cargarDatos()
         } catch (error) {
             console.error('Error al insertar datos:', error);
             alert('Se produjo un error al insertar datos. Por favor, inténtalo de nuevo.');
@@ -54,5 +55,5 @@ async function cargarDatos()
     })
 }
 
-cargarDatos()
+setInterval(cargarDatos,1000);
 });
