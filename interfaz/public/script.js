@@ -44,15 +44,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
 async function cargarDatos()
 {
-    const response = await fetch('/datos')
-    const result = await response.json();
-    const datos = document.getElementById("data")
-    datos.innerHTML = ""
-    result.rows.forEach(row => {
-        const li = document.createElement("li");
-        li.textContent = `Nombre: ${row.doc.nombre}, Edad: ${row.doc.edad}`;
-        datos.appendChild(li)
-    })
+    try {
+        const response = await fetch('/datos');
+        if (!response.ok) {
+            throw new Error('Error al cargar datos.');
+        }
+        const result = await response.json();
+        dataElement.innerHTML = "";
+
+        result.rows.forEach(row => {
+            const li = document.createElement('li');
+            li.textContent = `Nombre: ${row.doc.nombre}, Edad: ${row.doc.edad}`;
+            dataElement.appendChild(li);
+        });
+    } catch (error) {
+        console.error('Error al cargar datos:', error);
+        alert('Se produjo un error al cargar los datos. Por favor, inténtalo de nuevo.');
+    }
 }
 
 setInterval(cargarDatos,1000);
