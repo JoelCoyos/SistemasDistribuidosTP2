@@ -55,7 +55,7 @@ async function cargarDatos()
         result.rows.forEach(row => {
             const li = document.createElement('li');
             li.textContent = `Nombre: ${row.doc.nombre}, Edad: ${row.doc.edad}`;
-            dataElement.appendChild(li);
+            dataElement.insertBefore(li, dataElement.firstChild);
         });
     } catch (error) {
         console.error('Error al cargar datos:', error);
