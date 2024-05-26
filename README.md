@@ -3,8 +3,8 @@
 Es un proyecto donde crea tres contenedores:
 
   1) Que contiene una base de datos CouchDB.
-  2) Que contiene un servidor web con un servicio que inserte datos aleatorios constantemente en la base de datos, y que reciba la request del frontend para insertar los datos desde el tercer contenedor.
-  3) Que contenga una interfaz web simple que inserte y muestre datos de la base de datos.
+  2) Que contiene un servidor web con un servicio que inserta datos aleatorios constantemente en la base de datos, y que recibe la request del frontend para insertar los datos desde el tercer contenedor.
+  3) Que contiene una interfaz web simple que inserta y muestra datos de la base de datos.
 
 ## Comenzando 🚀
 
