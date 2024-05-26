@@ -5,6 +5,9 @@ const path = require('path')
 const app = express()
 app.use(bodyParser.json());
 const port = 8080;
+const path = require('path');
+
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -40,5 +43,5 @@ app.post('/insertar', async (req, res) => {
 });
 
 app.listen(port, () => {
-    console.log(`Server is listening at http://localhost:${port}`);
-});
+    console.log(`Listening at http://localhost:${port}`)
+})
