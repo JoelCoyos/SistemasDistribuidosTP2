@@ -26,18 +26,18 @@ _Para instalar y construir los contenedores, ir a la carpeta de directorio del p
 _Docker Build - Para construir_
 
 ```
-docker-compose.yml build
+docker-compose build
 ```
 
 _Docker Up - Para desplegar_
 
 ```
-docker-compose.yml up
+docker-compose up
 ```
 _Docker Down - Para eliminar_
 
 ```
-docker-compose.yml down
+docker-compose down
 ```
 
 ## Ejecutando la interfaz web ⚙️
